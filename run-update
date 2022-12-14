@@ -7,8 +7,8 @@
 
 arch='arm64' # architecture of the binary to download
 img_ver='alpine' # the tag of the docker image from the docker hub
-bin_dir=$HOME'/vaultwarden/' # where to move the binary
-web_root='/var/www/vaultwarden.yourdomain.com/' # web root of the web instance
+bin_dir='/usr/bin/vaultwarden'# where to move the binary
+web_root='/var/lib/vaultwarden/web-vault/' # web root of the web instance
 do_binary_update=1 # set to 0 to disable binary updates
 do_web_update=1 # set to 0 to disable web root updates
 
@@ -20,7 +20,7 @@ then
 	git pull
 	digest=$(curl -s 'https://hub.docker.com/v2/repositories/vaultwarden/server/tags/?name='$img_ver | jq -r ".results[] | select(.name == \"$img_ver\").images[] | select(.architecture == \"$arch\").digest")
 	./docker-image-extract vaultwarden/server:$digest
-	cp output/vaultwarden $bin_dir'/vaultwarden'
+	cp output/vaultwarden $bin_dir
 	cd ..
 	rm -rf output
 else
